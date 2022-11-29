@@ -15,6 +15,14 @@ public class Realisateur {
     public Realisateur() {
     }
 
+    public Realisateur(long id, String nom, String prenom, LocalDate dateNaissance, boolean celebre) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.dateNaissance = dateNaissance;
+        this.celebre = celebre;
+    }
+
     public Realisateur(long id, String nom, String prenom, LocalDate dateNaissance, List<Film> filmsRealises, boolean celebre) {
         this.id = id;
         this.nom = nom;

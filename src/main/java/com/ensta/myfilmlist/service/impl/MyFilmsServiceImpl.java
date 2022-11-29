@@ -19,7 +19,7 @@ import static java.lang.Math.round;
 public class MyFilmsServiceImpl implements MyFilmsService {
     public static final int NB_FILMS_MIN_REALISATEUR_CELEBRE = 3;
 
-    FilmDAO filmDAO = new JdbcFilmDAO();
+    FilmDAO filmDAO = JdbcFilmDAO.getInstance();
 
     @Override
     public Realisateur updateRealisateurCelebre(@NotNull Realisateur realisateur) throws ServiceException {
