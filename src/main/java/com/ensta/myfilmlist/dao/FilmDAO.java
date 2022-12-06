@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface FilmDAO {
     public List<Film> findAll();
+    public Film save(Film f);
+
 }

@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface RealisateurDAO {
     public List<Realisateur> findAll();
     Realisateur findByNomAndPrenom(String nom, String prenom);
-    Optional<Realisateur> fundById(long id);
+    Optional<Realisateur> findById(long id);
 }

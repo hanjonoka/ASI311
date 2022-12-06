@@ -32,6 +32,18 @@ public class Realisateur {
         this.celebre = celebre;
     }
 
+    @Override
+    public String toString() {
+        return "Realisateur{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", filmRealises=" + filmRealises +
+                ", celebre=" + celebre +
+                '}';
+    }
+
     public long getId() {
         return id;
     }

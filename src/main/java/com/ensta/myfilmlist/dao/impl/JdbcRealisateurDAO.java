@@ -17,7 +17,7 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
     private JdbcRealisateurDAO() {}
 
     private static JdbcRealisateurDAO Instance = null;
-    public JdbcRealisateurDAO getInstance() {
+    public static JdbcRealisateurDAO getInstance() {
         if(Instance==null) {
             Instance=new JdbcRealisateurDAO();
         }
@@ -42,7 +42,7 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
     public Realisateur findByNomAndPrenom(String nom, String prenom) {
         try {
         Realisateur real = jdbcTemplate.queryForObject(
-                "SELECT * FROM Realisateur WHERE prenom=? AND nom=?",
+                "SELECT * FROM Realisateur WHERE nom=? AND prenom=?",
                 (rs, rownum) -> {
                 return new Realisateur(
                         rs.getInt("id"),
@@ -54,12 +54,13 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
                 nom, prenom);
         return real;
         }catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public Optional<Realisateur> fundById(long id) {
+    public Optional<Realisateur> findById(long id) {
         try {
             Realisateur real = jdbcTemplate.queryForObject(
                     "SELECT * FROM Realisateur WHERE id=?",
@@ -80,3 +81,4 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
         }
     }
 }
+
