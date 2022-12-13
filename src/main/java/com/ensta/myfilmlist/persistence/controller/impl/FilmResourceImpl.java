@@ -8,6 +8,7 @@ import com.ensta.myfilmlist.service.MyFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,9 +33,10 @@ public class FilmResourceImpl implements FilmResource {
         return ResponseEntity.status(500).build();
     }
 
+
     @Override
-    @GetMapping("/film/<ID_DU_FILM>")
-    public ResponseEntity<FilmDTO> getFilmById() throws ControllerException {
+    @GetMapping("/{id}")
+    public ResponseEntity<FilmDTO> getFilmById(@PathVariable long id) throws ControllerException {
 
         return null;
     }
