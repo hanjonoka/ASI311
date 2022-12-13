@@ -60,4 +60,16 @@ public class RealisateurDTO {
     public void setCelebre(boolean celebre) {
         this.celebre = celebre;
     }
+
+    @Override
+    public String toString() {
+        return "RealisateurDTO{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", dateNaissance=" + dateNaissance +
+                ", filmRealises=" + filmRealises +
+                ", celebre=" + celebre +
+                '}';
+    }
 }
