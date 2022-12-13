@@ -41,4 +41,6 @@ public interface MyFilmsService {
     public List<RealisateurDTO> findAllRealisateurs() throws ServiceException;
 
     public RealisateurDTO findRealisateurByNomAndPrenom(String nom, String prenom) throws ServiceException;
+
+    public FilmDTO findFilmById(long id) throws ServiceException;
 }

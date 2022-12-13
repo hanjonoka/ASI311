@@ -6,23 +6,17 @@ import com.ensta.myfilmlist.persistence.ConnectionManager;
 import net.bytebuddy.dynamic.DynamicType;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JdbcRealisateurDAO implements RealisateurDAO {
 
     private JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
 
-    private JdbcRealisateurDAO() {}
-
-    private static JdbcRealisateurDAO Instance = null;
-    public static JdbcRealisateurDAO getInstance() {
-        if(Instance==null) {
-            Instance=new JdbcRealisateurDAO();
-        }
-        return Instance;
-    }
+    public JdbcRealisateurDAO() {}
 
 
     @Override

@@ -8,6 +8,8 @@ import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.service.MyFilmsService;
 import com.ensta.myfilmlist.service.impl.MyFilmsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,10 +18,12 @@ import java.util.List;
 /**
  * Classe de tests du service MyFilmsServiceImpl.
  */
+@Component
 public class MyfilmlistTests {
 
 	/** Initialisation du service pour les traitements de l'application MyFilms */
-	private MyFilmsService myFilmsService = new MyFilmsServiceImpl();
+	@Autowired
+	private MyFilmsService myFilmsService;
 
 	/**
 	 * Permet de tester la mise a jour du statut "celebre" d'un RealisateurDTO en fonction du nombre de films realises.

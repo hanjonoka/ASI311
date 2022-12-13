@@ -5,10 +5,12 @@ import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -16,20 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class JdbcFilmDAO implements FilmDAO {
-    private JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-    private JdbcFilmDAO() {}
-
-    private static JdbcFilmDAO Instance=null;
-    public static JdbcFilmDAO getInstance() {
-        if (Instance == null) {
-            Instance = new JdbcFilmDAO();
-        }
-        return Instance;
-    }
-
-    RealisateurDAO realisateurDAO = JdbcRealisateurDAO.getInstance();
+    public JdbcFilmDAO() {}
 
     private final static String FIND_ALL_FILMS_QUERY = "SELECT * FROM Film";
     private final static String FIND_ALL_FILMS_WITH_REAL_QUERY =

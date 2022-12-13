@@ -13,7 +13,9 @@ import com.ensta.myfilmlist.mapper.RealisateurMapper;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.service.MyFilmsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -23,11 +25,14 @@ import java.util.Optional;
 
 import static java.lang.Math.round;
 
+@Service
 public class MyFilmsServiceImpl implements MyFilmsService {
     public static final int NB_FILMS_MIN_REALISATEUR_CELEBRE = 3;
 
-    FilmDAO filmDAO = JdbcFilmDAO.getInstance();
-    RealisateurDAO realisateurDAO = JdbcRealisateurDAO.getInstance();
+    @Autowired
+    FilmDAO filmDAO;
+    @Autowired
+    RealisateurDAO realisateurDAO;
 
     @Override
     public Realisateur updateRealisateurCelebre(@NotNull Realisateur realisateur) throws ServiceException {
@@ -85,5 +90,14 @@ public class MyFilmsServiceImpl implements MyFilmsService {
                 return null;
             }
             return RealisateurMapper.convertRealisateurToRealisateurDTO(realisateur);
+    }
+
+    @Override
+    public FilmDTO findFilmById(long id) throws ServiceException {
+        Optional<Film> optFilmDTO = filmDAO.findById(id);
+        if(optFilmDTO.isPresent()) {
+            return FilmMapper.convertFilmToFilmDTO(optFilmDTO.get());
+        }
+        return null;
     }
 }
