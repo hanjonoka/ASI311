@@ -13,6 +13,15 @@ public class Film {
 
 	private Realisateur realisateur;
 
+	public Film() {
+	}
+
+	public Film(long id, String titre, int duree) {
+		this.id = id;
+		this.titre = titre;
+		this.duree = duree;
+	}
+
 	public Realisateur getRealisateur() {
 		return realisateur;
 	}

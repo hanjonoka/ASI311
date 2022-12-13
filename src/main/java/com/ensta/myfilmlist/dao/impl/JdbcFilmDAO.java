@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class JdbcFilmDAO implements FilmDAO {
     private JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
@@ -22,15 +23,19 @@ public class JdbcFilmDAO implements FilmDAO {
 
     private static JdbcFilmDAO Instance=null;
     public static JdbcFilmDAO getInstance() {
-        if(Instance==null) {
+        if (Instance == null) {
             Instance = new JdbcFilmDAO();
         }
         return Instance;
     }
+
+    RealisateurDAO realisateurDAO = JdbcRealisateurDAO.getInstance();
+
     private final static String FIND_ALL_FILMS_QUERY = "SELECT * FROM Film";
     private final static String FIND_ALL_FILMS_WITH_REAL_QUERY =
             "SELECT * FROM Film LEFT JOIN Realisateur ON Film.realisateur_id=Realisateur.id";
-
+    private final static String FIND_FILM_BY_ID = "SELECT * FROM Film WHERE id=?";
+    private final static String FIND_FILMS_BY_REAL_ID = "SELECT * FROM Film WHERE realisateur_id=?";
     @Override
     public List<Film> findAll() {
         List<Film> liste = new ArrayList<>();
@@ -66,5 +71,38 @@ public class JdbcFilmDAO implements FilmDAO {
         jdbcTemplate.update(creator, keyHolder);
         f.setId(keyHolder.getKey().longValue());
         return f;
+    }
+
+    @Override
+    public Optional<Film> findById(long id) {
+        Film film = jdbcTemplate.queryForObject(FIND_FILM_BY_ID, (rs, rowNum) -> {
+            Film f =  new Film(
+                    rs.getInt("id"),
+                    rs.getString("titre"),
+                    rs.getInt("duree")
+            );
+            return f;
+        }, id);
+        if (film!=null) {
+            return Optional.of(film);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void delete(Film film) {
+        jdbcTemplate.update("DELETE FROM Film WHERE id=?",film.getId());
+    }
+
+    @Override
+    public List<Film> findByRealisateurId(long realisateurId) {
+        return jdbcTemplate.query(FIND_FILMS_BY_REAL_ID, (rs, rownum) -> {
+            Film f =  new Film(
+                    rs.getInt("id"),
+                    rs.getString("titre"),
+                    rs.getInt("duree")
+            );
+            return f;
+        }, realisateurId);
     }
 }
