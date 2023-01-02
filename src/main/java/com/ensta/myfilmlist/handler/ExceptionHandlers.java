@@ -1,7 +1,6 @@
 package com.ensta.myfilmlist.handler;
 
 import com.ensta.myfilmlist.exception.ControllerException;
-import org.springframework.boot.context.properties.bind.BindException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
