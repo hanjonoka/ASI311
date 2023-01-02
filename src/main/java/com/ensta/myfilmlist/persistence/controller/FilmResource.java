@@ -12,4 +12,5 @@ public interface FilmResource {
     ResponseEntity<List<FilmDTO>> getAllFilms() throws ControllerException;
     ResponseEntity<FilmDTO> getFilmById(@PathVariable long id) throws ControllerException;
     ResponseEntity<FilmDTO> createFilm(FilmForm filmForm) throws ControllerException;
+    ResponseEntity<?> deleteFilm(@PathVariable long id) throws ControllerException;
 }

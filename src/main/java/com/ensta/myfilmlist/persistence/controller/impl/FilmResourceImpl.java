@@ -64,4 +64,16 @@ public class FilmResourceImpl implements FilmResource {
         }
     }
 
+    @Override
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<?> deleteFilm(@PathVariable long id) throws ControllerException {
+        try {
+            myFilmsService.deleteFilm(id);
+            return ResponseEntity.status(204).build();
+        } catch(ServiceException e) {
+            e.printStackTrace();
+            throw new ControllerException();
+        }
+    }
+
 }

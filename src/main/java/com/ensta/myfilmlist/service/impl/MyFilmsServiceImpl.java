@@ -100,4 +100,14 @@ public class MyFilmsServiceImpl implements MyFilmsService {
         }
         return null;
     }
+
+    @Override
+    public void deleteFilm(long id) throws ServiceException {
+        Optional<Film> optFilm = filmDAO.findById(id);
+        if(optFilm.isPresent()) {
+            filmDAO.delete(optFilm.get());
+        } else {
+            throw new ServiceException("Non Existent Film");
+        }
+    }
 }

@@ -43,4 +43,6 @@ public interface MyFilmsService {
     public RealisateurDTO findRealisateurByNomAndPrenom(String nom, String prenom) throws ServiceException;
 
     public FilmDTO findFilmById(long id) throws ServiceException;
+
+    public void deleteFilm(long id) throws ServiceException;
 }
