@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class FilmResourceImpl implements FilmResource {
 
     @Override
     @PostMapping("/create")
+    @Transactional
     public ResponseEntity<FilmDTO> createFilm(@RequestBody @Valid FilmForm filmForm) throws ControllerException {
         try {
             FilmDTO f = myFilmsService.createFilm(filmForm);
@@ -69,6 +71,7 @@ public class FilmResourceImpl implements FilmResource {
 
     @Override
     @PostMapping("/delete/{id}")
+    @Transactional
     public ResponseEntity<?> deleteFilm(@PathVariable long id) throws ControllerException {
         try {
             myFilmsService.deleteFilm(id);
