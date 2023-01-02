@@ -6,6 +6,7 @@ import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -28,7 +29,7 @@ public class JdbcFilmDAO implements FilmDAO {
     private final static String FIND_ALL_FILMS_QUERY = "SELECT * FROM Film";
     private final static String FIND_ALL_FILMS_WITH_REAL_QUERY =
             "SELECT * FROM Film LEFT JOIN Realisateur ON Film.realisateur_id=Realisateur.id";
-    private final static String FIND_FILM_BY_ID = "SELECT * FROM Film WHERE id=?";
+    private final static String FIND_FILM_BY_ID_WITH_REAL = "SELECT * FROM Film LEFT JOIN Realisateur ON Film.realisateur_id=Realisateur.id WHERE Film.id=?";
     private final static String FIND_FILMS_BY_REAL_ID = "SELECT * FROM Film WHERE realisateur_id=?";
     @Override
     public List<Film> findAll() {
@@ -69,18 +70,29 @@ public class JdbcFilmDAO implements FilmDAO {
 
     @Override
     public Optional<Film> findById(long id) {
-        Film film = jdbcTemplate.queryForObject(FIND_FILM_BY_ID, (rs, rowNum) -> {
-            Film f =  new Film(
-                    rs.getInt("id"),
-                    rs.getString("titre"),
-                    rs.getInt("duree")
-            );
-            return f;
-        }, id);
-        if (film!=null) {
-            return Optional.of(film);
+        try {
+            Film film = jdbcTemplate.queryForObject(FIND_FILM_BY_ID_WITH_REAL, (rs, rowNum) -> {
+                Film f = new Film();
+                f.setId(rs.getInt("Film.id"));
+                f.setDuree(rs.getInt("Film.duree"));
+                f.setTitre(rs.getString("Film.titre"));
+                Realisateur r = new Realisateur(
+                        rs.getInt("Realisateur.id"),
+                        rs.getString("Realisateur.nom"),
+                        rs.getString("Realisateur.prenom"),
+                        rs.getDate("Realisateur.date_naissance").toLocalDate(),
+                        rs.getBoolean("Realisateur.celebre")
+                );
+                f.setRealisateur(r);
+                return f;
+            }, id);
+            if (film != null) {
+                return Optional.of(film);
+            }
+            return Optional.empty();
+        }catch (EmptyResultDataAccessException e){
+            return Optional.empty();
         }
-        return Optional.empty();
     }
 
     @Override

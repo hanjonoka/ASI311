@@ -37,8 +37,17 @@ public class FilmResourceImpl implements FilmResource {
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<FilmDTO> getFilmById(@PathVariable long id) throws ControllerException {
-
-        return null;
+        try {
+            FilmDTO f = myFilmsService.findFilmById(id);
+            if(f!=null) {
+                return ResponseEntity.ok(f);
+            }else{
+                return ResponseEntity.status(404).build();
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            throw new ControllerException();
+        }
     }
 
 }
