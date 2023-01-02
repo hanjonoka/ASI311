@@ -8,11 +8,14 @@ import com.ensta.myfilmlist.persistence.controller.FilmResource;
 import com.ensta.myfilmlist.service.MyFilmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/film")
 public class FilmResourceImpl implements FilmResource {
 
@@ -50,7 +53,7 @@ public class FilmResourceImpl implements FilmResource {
 
     @Override
     @PostMapping("/create")
-    public ResponseEntity<FilmDTO> createFilm(@RequestBody FilmForm filmForm) throws ControllerException {
+    public ResponseEntity<FilmDTO> createFilm(@RequestBody @Valid FilmForm filmForm) throws ControllerException {
         try {
             FilmDTO f = myFilmsService.createFilm(filmForm);
             if(f!=null) {
