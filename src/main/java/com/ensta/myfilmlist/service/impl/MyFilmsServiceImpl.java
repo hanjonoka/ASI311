@@ -75,7 +75,7 @@ public class MyFilmsServiceImpl implements MyFilmsService {
             return FilmMapper.convertFilmToFilmDTO(
                     filmDAO.save(film));
         }
-        throw new ServiceException();
+        throw new ServiceException("Non Existent Real");
     }
 
     @Override
