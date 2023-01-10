@@ -1,6 +1,7 @@
 package com.ensta.myfilmlist.persistence.controller.impl;
 
 import com.ensta.myfilmlist.dto.FilmDTO;
+import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.exception.ControllerException;
 import com.ensta.myfilmlist.exception.ServiceException;
 import com.ensta.myfilmlist.form.FilmForm;
@@ -35,6 +36,17 @@ public class FilmResourceImpl implements FilmResource {
         return ResponseEntity.status(500).build();
     }
 
+    @Override
+    @GetMapping("/realisateurs")
+    public ResponseEntity<List<RealisateurDTO>> getAllRealisateurs() throws ControllerException {
+        try {
+            List<RealisateurDTO> listReal = myFilmsService.findAllRealisateurs();
+            return ResponseEntity.ok(listReal);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            throw new ControllerException();
+        }
+    }
 
     @Override
     @GetMapping("/{id}")
@@ -51,6 +63,8 @@ public class FilmResourceImpl implements FilmResource {
             throw new ControllerException();
         }
     }
+
+
 
     @Override
     @PostMapping("/create")

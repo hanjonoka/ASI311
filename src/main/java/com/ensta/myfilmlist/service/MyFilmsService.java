@@ -6,6 +6,7 @@ import com.ensta.myfilmlist.exception.ServiceException;
 import com.ensta.myfilmlist.form.FilmForm;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import javax.validation.constraints.NotNull;
 import java.security.Provider;
